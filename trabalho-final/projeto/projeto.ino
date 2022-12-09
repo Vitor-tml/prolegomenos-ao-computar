@@ -57,15 +57,14 @@ void loop()
   mostraSequencia(sequencia);
   // Lê sequência apertada
   for (i = 0; i < TAM;  i++)
-    tentativa[i] = botaoApertado()
+    tentativa[i] = botaoApertado();
 
   if (acertou(tentativa, sequencia))
     {
       acertos++;
       if (acertos == 3)
-      {
         nivel++;
-      }
+
     }
 
 
