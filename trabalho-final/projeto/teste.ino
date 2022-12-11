@@ -40,10 +40,52 @@ void setup()
     pinMode(botoes[i], INPUT);
   }
   pinMode(BUZZ, OUTPUT);
+  randomSeed(analogRead(0));
 }
 
 void loop()
 {
+  int tentativa[TAM];
+  int resposta[TAM];
+  int i;
+  
+  for(i = 0; i < TAM; i++)
+  {
+    resposta[i] = random(0, TAM);
+    lcd_1.print(resposta[i]);
+  }
+  mostraSequencia(resposta);
+  if(testaSequencia(resposta))
+  {
+    lcd_1.print("Correto!");
+  }
+  else
+  {
+    lcd_1.print("Errado!");
+  }
+}
+int testaSequencia(int *resposta)
+{
+  int i;
+  for(i = 0; i < TAM; i++)
+  {
+    if(resposta[i] != botaoApertado())
+    {
+      return 0;
+    }
+  }
+  return 1;
+}
+void mostraSequencia(int *sequencia)
+{
+  int i;
+  
+  for(i = 0; i < TAM; i++)
+  {
+    digitalWrite(leds[sequencia[i]], HIGH);
+    delay(500);
+    digitalWrite(leds[sequencia[i]], LOW);
+  }
 }
 
 int botaoApertado()
@@ -60,7 +102,6 @@ int botaoApertado()
         {
           tone(BUZZ, LA, 100);
         }
-        
         return i;
       }
     }
